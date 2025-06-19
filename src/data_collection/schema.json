@@ -1,0 +1,6 @@
+{
+    "animal_crossing_fossils":[
+        {"name":"Name","type":"string"},
+        {"name":"UniqueEntryID","type":"string"}
+    ]
+}
