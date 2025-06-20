@@ -11,10 +11,11 @@ def create_random_date_span(start, end):
 
 def create_mock_gjennomforinger():
 
-    columns = ['id', 'tiltakstype_id', 'start_dato', 'slutt_dato']
+    columns = ['id', 'tiltakstype_id', 'enhetsnummer', 'avdeling', 'start_dato', 'slutt_dato']
     rows = []
     start_span = datetime(2009, 1, 1)
     end_span = datetime(2027, 1, 1)
+    avdelinger = ['A&H', 'KIA', 'Oppfølging og øk.', 'Ungdomsavd.', 'Veiledingsavd.']
 
     for i in range(200):
         # Ensures that the start/end dates for the mock "gjennomføringer" is sequential and not random
@@ -23,7 +24,9 @@ def create_mock_gjennomforinger():
 
         row = {
             'id': 'gjennomføring' + str(i),
-            'tiltakstype_id': np.random.randint(1, 9),
+            'tiltakstype_id': 'tiltak' + str(np.random.randint(1, 9)),
+            'enhetsnummer': '0219',
+            'avdeling': random.choice(avdelinger),
             'start_dato': start_date.date(),
             'slutt_dato': end_date.date()
         } 
@@ -34,9 +37,10 @@ def create_mock_gjennomforinger():
 
 def create_mock_deltakere():
 
-    columns = ['id', 'gjennomforing_id', 'start_dato', 'slutt_dato', ]
+    columns = ['id', 'gjennomforing_id', 'innsatsbehov', 'start_dato', 'slutt_dato', ]
     rows = []
     gjennomforinger = pd.read_csv('src/data_mocking/mock_gjennomforinger.csv', parse_dates=['start_dato', 'slutt_dato'], index_col=False)
+    innsatsbehov = ['Landegruppe3', 'S.Bestemt', 'S.Tilpasset']
     
     for i in range (5000):
 
@@ -51,6 +55,7 @@ def create_mock_deltakere():
         row = {
             'id': 'deltaker' + str(i),
             'gjennomforing_id': random_gjennomforing['id'].iloc[0],
+            'innsatsbehov': random.choice(innsatsbehov),
             'start_dato': start_date.date(),
             'slutt_dato': end_date.date()
         }

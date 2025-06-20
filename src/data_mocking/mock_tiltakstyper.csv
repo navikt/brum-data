@@ -1,10 +1,10 @@
 id, navn                                           , tiltakskode                       , arena_tiltakskode
- 1, Fag- og yrkesopplæring (gruppe)                , GRUPPE_FAG_OG_YRKESOPPLAERING     , GRUFAGYRKE
- 2, Arbeidsmarkedsopplæring (gruppe)               , GRUPPE_ARBEIDSMARKEDSOPPLAERING   , GRUPPEAMO
- 3, Digitalt jobbsøkerkurs                         , DIGITALT_OPPFOLGINGSTILTAK        , DIGIOPPARB
- 4, Jobbklubb                                      , JOBBKLUBB                         , JOBBK
- 5, Arbeidsforberedende trening                    , ARBEIDSFORBEREDENDE_TRENING       , ARBFORB
- 6, Oppfølging                                     , OPPFOLGING                        , INDOPPFAG
- 7, Avklaring                                      , AVKLARING                         , AVKLARAG
- 8, Varig tilrettelagt arbeid i skjermet virksomhet, VARIG_TILRETTELAGT_ARBEID_SKJERMET, VASV
- 9, Arbeidsrettet rehabilitering                   , ARBEIDSRETTET_REHABILITERING      , ARBRRHDAG
+ tiltak1, Fag- og yrkesopplæring (gruppe)                , GRUPPE_FAG_OG_YRKESOPPLAERING     , GRUFAGYRKE
+ tiltak2, Arbeidsmarkedsopplæring (gruppe)               , GRUPPE_ARBEIDSMARKEDSOPPLAERING   , GRUPPEAMO
+ tiltak3, Digitalt jobbsøkerkurs                         , DIGITALT_OPPFOLGINGSTILTAK        , DIGIOPPARB
+ tiltak4, Jobbklubb                                      , JOBBKLUBB                         , JOBBK
+ tiltak5, Arbeidsforberedende trening                    , ARBEIDSFORBEREDENDE_TRENING       , ARBFORB
+ tiltak6, Oppfølging                                     , OPPFOLGING                        , INDOPPFAG
+ tiltak7, Avklaring                                      , AVKLARING                         , AVKLARAG
+ tiltak8, Varig tilrettelagt arbeid i skjermet virksomhet, VARIG_TILRETTELAGT_ARBEID_SKJERMET, VASV
+ tiltak9, Arbeidsrettet rehabilitering                   , ARBEIDSRETTET_REHABILITERING      , ARBRRHDAG
