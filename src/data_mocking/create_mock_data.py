@@ -17,7 +17,7 @@ def create_mock_gjennomforinger():
     end_span = datetime(2027, 1, 1)
     avdelinger = ['A&H', 'KIA', 'Oppfølging og øk.', 'Ungdomsavd.', 'Veiledingsavd.']
 
-    for i in range(200):
+    for i in range(1000):
         # Ensures that the start/end dates for the mock "gjennomføringer" is sequential and not random
         start_date = create_random_date_span(start_span, end_span - timedelta(days=21))
         end_date = create_random_date_span(start_date + timedelta(days=21), end_span)
@@ -42,7 +42,7 @@ def create_mock_deltakere():
     gjennomforinger = pd.read_csv('src/data_mocking/mock_gjennomforinger.csv', parse_dates=['start_dato', 'slutt_dato'], index_col=False)
     innsatsbehov = ['Landegruppe3', 'S.Bestemt', 'S.Tilpasset']
     
-    for i in range (5000):
+    for i in range (10000):
 
         random_gjennomforing = gjennomforinger.sample(n=1)
         
