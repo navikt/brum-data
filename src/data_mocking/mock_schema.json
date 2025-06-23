@@ -1,0 +1,10 @@
+{
+    "mock_gjennomforinger":[
+        {"name":"id","type":"string"},
+        {"name":"tiltakstype_id","type":"string"},
+        {"name":"enhetsnummer","type":"integer"},
+        {"name":"avdeling","type":"string"},
+        {"name":"start_dato","type":"date"},
+        {"name":"slutt_dato","type":"date"}
+    ]
+}

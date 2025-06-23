@@ -2,6 +2,9 @@ import pandas as pd
 import numpy as np
 import random
 from datetime import datetime, timedelta
+import sys
+sys.path.insert(0, 'src')
+from data_collection.functions import *
 
 def create_random_date_span(start, end):
 
@@ -65,6 +68,19 @@ def create_mock_deltakere():
     df.to_csv('src/data_mocking/mock_deltakere.csv', index=False)
 
         
+def write_mock_to_BQ():
+    #df_tiltakstyper = pd.read_csv('mock_tiltakstyper.csv')
+    df_gjennomforinger = pd.read_csv('src/data_mocking/mock_gjennomforinger.csv', parse_dates=['start_dato', 'slutt_dato'])
+    #df_deltakere = pd.read_csv('mock_deltakere.csv')
+    PROJECT_ID = 'brum-dev-b72f'
+    SA_KEY_NAME = 'service-account-key'
+    DATASET = 'mock_data'
+    bq_client_mock_data = create_client(PROJECT_ID, SA_KEY_NAME)
 
-create_mock_gjennomforinger()
-create_mock_deltakere()
+    # Write mock gjenomforinger
+    write_to_BQ(client=bq_client_mock_data, table_name="mock_gjennomforinger", dframe=df_gjennomforinger, dataset=DATASET, disp = "WRITE_TRUNCATE", schema_name='src/data_mocking/mock_schema.json')
+
+    
+#create_mock_gjennomforinger()
+#create_mock_deltakere()
+write_mock_to_BQ()

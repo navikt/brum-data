@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import json
 
 from google.oauth2 import service_account
@@ -18,8 +19,8 @@ def create_client(project_id, sa_key_name):
     client = bigquery.Client(credentials=creds, project=creds.project_id)
     return client
 
-def write_to_BQ(client, table_name, dframe, dataset='Kaggle_test_data', disp = "WRITE_APPEND"):
-    with open('schema.json', 'rb') as f:
+def write_to_BQ(client, table_name, dframe, dataset='Kaggle_test_data', disp = "WRITE_APPEND", schema_name='schema.json'):
+    with open(schema_name, 'rb') as f:
         schema = json.load(f)
 
     table_id = dataset+'.'+table_name
@@ -32,3 +33,15 @@ def write_to_BQ(client, table_name, dframe, dataset='Kaggle_test_data', disp = "
     job = client.load_table_from_dataframe(
         dframe, table_id, job_config=job_config
     )
+
+def get_data_from_BQ(SOURCE_PROJECT_ID, TARGET_PROJECT_ID, SA_KEY_NAME, DATASET, source_table):
+    # Create BigQuery client
+    bq_client = create_client(SOURCE_PROJECT_ID, SA_KEY_NAME)
+
+    # Read data from BigQuery
+    sql_src_qry = f"SELECT * FROM `{TARGET_PROJECT_ID}.{DATASET}.{source_table}`"
+
+    df = bq_client.query(sql_src_qry).to_dataframe()
+    df.replace({np.nan: None}, inplace = True)
+
+    return df
