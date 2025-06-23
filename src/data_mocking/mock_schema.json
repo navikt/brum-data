@@ -6,5 +6,18 @@
         {"name":"avdeling","type":"string"},
         {"name":"start_dato","type":"date"},
         {"name":"slutt_dato","type":"date"}
+    ],
+    "mock_tiltakstyper":[
+        {"name":"id","type":"string"},
+        {"name":"navn","type":"string"},
+        {"name":"tiltakskode","type":"string"},
+        {"name":"arena_tiltakskode","type":"string"}
+    ],
+    "mock_deltakere":[
+        {"name":"id","type":"string"},
+        {"name":"gjennomforing_id","type":"string"},
+        {"name":"innsatsbehov","type":"string"},
+        {"name":"start_dato","type":"date"},
+        {"name":"slutt_dato","type":"date"}
     ]
 }

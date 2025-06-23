@@ -69,9 +69,9 @@ def create_mock_deltakere():
 
         
 def write_mock_to_BQ():
-    #df_tiltakstyper = pd.read_csv('mock_tiltakstyper.csv')
+    df_tiltakstyper = pd.read_csv('src/data_mocking/mock_tiltakstyper.csv')
     df_gjennomforinger = pd.read_csv('src/data_mocking/mock_gjennomforinger.csv', parse_dates=['start_dato', 'slutt_dato'])
-    #df_deltakere = pd.read_csv('mock_deltakere.csv')
+    df_deltakere = pd.read_csv('src/data_mocking/mock_deltakere.csv', parse_dates=['start_dato', 'slutt_dato'])
     PROJECT_ID = 'brum-dev-b72f'
     SA_KEY_NAME = 'service-account-key'
     DATASET = 'mock_data'
@@ -79,6 +79,8 @@ def write_mock_to_BQ():
 
     # Write mock gjenomforinger
     write_to_BQ(client=bq_client_mock_data, table_name="mock_gjennomforinger", dframe=df_gjennomforinger, dataset=DATASET, disp = "WRITE_TRUNCATE", schema_name='src/data_mocking/mock_schema.json')
+    write_to_BQ(client=bq_client_mock_data, table_name="mock_tiltakstyper", dframe=df_tiltakstyper, dataset=DATASET, disp = "WRITE_TRUNCATE", schema_name='src/data_mocking/mock_schema.json')
+    write_to_BQ(client=bq_client_mock_data, table_name="mock_deltakere", dframe=df_deltakere, dataset=DATASET, disp = "WRITE_TRUNCATE", schema_name='src/data_mocking/mock_schema.json')
 
     
 #create_mock_gjennomforinger()
