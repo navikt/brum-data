@@ -25,14 +25,17 @@ bq_client = create_client(PROJECT_ID, SA_KEY_NAME)
 
 # Requests the data from BiqQuery and returns a dataframe
 
-df = get_data_from_BQ(bq_client, 'team-mulighetsrommet-prod-5492', 'mulighetsrommet_api_datastream', 'tiltakstype_view')
+df_tiltakstyper = get_data_from_BQ(bq_client, 'team-mulighetsrommet-prod-5492', 'mulighetsrommet_api_datastream', 'tiltakstype_view')
+df_gjennomforing = get_data_from_BQ(bq_client, 'team-mulighetsrommet-prod-5492', 'mulighetsrommet_api_datastream', 'gjennomforing_view')
+df_gjennomforing_enhet = get_data_from_BQ(bq_client, 'team-mulighetsrommet-prod-5492', 'mulighetsrommet_api_datastream', 'gjennomforing_nav_enhet_view')
 
 # Animal crossing test
 #df, bq_client_animal = get_data_from_BQ(PROJECT_ID, SA_KEY_NAME, DATASET, source_table)
 #df_subset = df[['Name', 'UniqueEntryID']]
 
-print(df.head())
-print(df.info())
+print(df_tiltakstyper.info())
+print(df_gjennomforing.info())
+print(df_gjennomforing_enhet.info())
 #print(df_subset.head())
 
 #write_to_BQ(client=bq_client_animal, table_name="animal_crossing_fossils", dframe=df_subset, dataset=DATASET, disp = "WRITE_TRUNCATE")
