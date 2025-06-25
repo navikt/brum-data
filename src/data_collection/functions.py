@@ -34,10 +34,7 @@ def write_to_BQ(client, table_name, dframe, dataset='Kaggle_test_data', disp = "
         dframe, table_id, job_config=job_config
     )
 
-def get_data_from_BQ(SOURCE_PROJECT_ID, TARGET_PROJECT_ID, SA_KEY_NAME, DATASET, source_table):
-    # Create BigQuery client
-    bq_client = create_client(SOURCE_PROJECT_ID, SA_KEY_NAME)
-
+def get_data_from_BQ(bq_client, TARGET_PROJECT_ID, DATASET, source_table):
     # Read data from BigQuery
     sql_src_qry = f"SELECT * FROM `{TARGET_PROJECT_ID}.{DATASET}.{source_table}`"
 

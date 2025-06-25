@@ -20,10 +20,12 @@ SA_KEY_NAME = 'service-account-key'
 DATASET = 'Kaggle_test_data'
 source_table = 'Fossils'
 
+# Create client based on brum-dev
+bq_client = create_client(PROJECT_ID, SA_KEY_NAME)
+
 # Requests the data from BiqQuery and returns a dataframe
 
-
-df = get_data_from_BQ(data_projects[0]['SOURCE_PROJECT_ID'], data_projects[0]['PROJECT_ID'], data_projects[0]['SA_KEY_NAME'], data_projects[0]['DATASET'], data_projects[0]['source_table'])
+df = get_data_from_BQ(bq_client, 'team-mulighetsrommet-prod-5492', 'mulighetsrommet_api_datastream', 'tiltakstype_view')
 
 # Animal crossing test
 #df, bq_client_animal = get_data_from_BQ(PROJECT_ID, SA_KEY_NAME, DATASET, source_table)
