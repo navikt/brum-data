@@ -21,6 +21,7 @@ with DAG(
         dag=dag,
         name="migrate_bigquery",
         repo="navikt/brum-data",
+        branch = "main",
         script_path="src/data_collection/transfer_bq_datasets.py",
         requirements_path="requirements_bq.txt",
         use_uv_pip_install=True,
