@@ -14,7 +14,7 @@ with DAG(
     dag_id="daily_raw_data_migrate",
     description="A DAG that migrates data from different BQ projects to the brum project",
     schedule_interval="0 6 * * *",
-    start_date=datetime(2025, 6, 27, tzinfo=timezone("Europe/Oslo")),
+    start_date=datetime(2025, 6, 26, tzinfo=timezone("Europe/Oslo")),
     catchup=False
 ) as dag:
     migrate_bigquery = python_operator(
