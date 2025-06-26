@@ -1,12 +1,13 @@
 """DAG to automate the collection of the raw data from other BQ projects to Brum"""
 from datetime import datetime
+from pendulum import timezone
 from airflow import DAG
 from dataverk_airflow import python_operator
 
 allowlist = [
     "secretmanager.googleapis.com",
     "bigquery.googleapis.com",
-    
+
 ]
 
 with DAG(
@@ -14,7 +15,7 @@ with DAG(
     description="A DAG that migrates data from different BQ projects to the brum project",
     owner="brum-data",
     schedule_interval="0 6 * * *",
-    start_date=datetime(2025, 6, 27, tzinfo=("Europe/Oslo")),
+    start_date=datetime(2025, 6, 27, tzinfo=timezone("Europe/Oslo")),
     catchup=False
 ) as dag:
     migrate_bigquery = python_operator(
