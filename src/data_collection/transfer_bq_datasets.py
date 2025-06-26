@@ -11,7 +11,7 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 
-from functions import create_client, write_to_BQ, get_data_from_BQ
+from functions import *
 
 # Brum project
 PROJECT_ID = 'brum-dev-b72f'
@@ -63,19 +63,5 @@ WHEN NOT MATCHED BY SOURCE THEN
   DELETE
 """
 
-def get_raw_data():
-    logging.info("Attempting to get get 'gjennomforing_view' from BQ")
-    try:
-        bq_client.query(update_gjennomforing_query)
-        logging.info("Query handled successfully")
-    except Exception as e:
-        logging.error(f"Query failed: {e}")
-
-    logging.info("Attempting to get get 'gjennomforing_nav_enhet_view' from BQ")
-    try:
-        bq_client.query(update_gjennomforing_enhet_query)
-        logging.info("Query handled successfully")
-    except Exception as e:
-        logging.error(f"Query failed: {e}")
-
-get_raw_data()
+update_raw_data(bq_client, update_gjennomforing_query)
+update_raw_data(bq_client, update_gjennomforing_enhet_query)

@@ -1,6 +1,11 @@
 import pandas as pd
 import numpy as np
 import json
+import logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
 
 from google.oauth2 import service_account
 from google.cloud import bigquery
@@ -42,3 +47,11 @@ def get_data_from_BQ(bq_client, TARGET_PROJECT_ID, DATASET, source_table):
     df.replace({np.nan: None}, inplace = True)
 
     return df
+
+def update_raw_data(client, query):
+    logging.info(f"Attempting to get raw data from BQ")
+    try:
+        client.query(query)
+        logging.info("Query handled successfully")
+    except Exception as e:
+        logging.error(f"Query failed: {e}")
