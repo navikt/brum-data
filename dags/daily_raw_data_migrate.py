@@ -7,8 +7,11 @@ from dataverk_airflow import python_operator
 allowlist = [
     "secretmanager.googleapis.com",
     "bigquery.googleapis.com",
-    "icmp"
-
+    "icmp",
+    "hooks.slack.com",
+    "pypi.org",
+    "files.pythonhosted.org",
+    "pypi.python.org"
 ]
 
 with DAG(
@@ -26,7 +29,7 @@ with DAG(
         script_path="src/data_collection/transfer_bq_datasets.py",
         requirements_path="requirements_bq.txt",
         use_uv_pip_install=True,
-        #slack_channel="#brum-intern",
+        slack_channel="#brum-intern",
         allowlist=allowlist
     )
 
