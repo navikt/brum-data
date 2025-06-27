@@ -7,6 +7,7 @@ from dataverk_airflow import python_operator
 allowlist = [
     "secretmanager.googleapis.com",
     "bigquery.googleapis.com",
+    "icmp"
 
 ]
 
