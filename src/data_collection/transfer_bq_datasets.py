@@ -11,6 +11,7 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 
+from pathlib import Path
 from functions import *
 
 # Brum project
@@ -24,44 +25,13 @@ bq_client = create_client(PROJECT_ID, SA_KEY_NAME)
 #df_tiltakstyper = get_data_from_BQ(bq_client, 'team-mulighetsrommet-prod-5492', 'mulighetsrommet_api_datastream', 'tiltakstype_view')
 df_gjennomforing = get_data_from_BQ(bq_client, 'team-mulighetsrommet-prod-5492', 'mulighetsrommet_api_datastream', 'gjennomforing_view')
 df_gjennomforing_enhet = get_data_from_BQ(bq_client, 'team-mulighetsrommet-prod-5492', 'mulighetsrommet_api_datastream', 'gjennomforing_nav_enhet_view')
+#df_deltakere = get_data_from_BQ(bq_client, 'FYLL INN')
 
-# Queries to update the tables for gjennomforing and nav_enhet_gjennomforing with any changed or new rows
-update_gjennomforing_query = """
-MERGE `tiltak_bronze.gjennomforinger_bronze` AS target
-USING `team-mulighetsrommet-prod-5492.mulighetsrommet_api_datastream.gjennomforing_view` AS source
-ON target.id = source.id
-WHEN MATCHED AND (
-     target.oppdatert_tidspunkt IS DISTINCT FROM source.oppdatert_tidspunkt
-) THEN
-  UPDATE SET
-    id = source.id,
-    tiltakstype_id = source.tiltakstype_id,
-    avtale_id = source.avtale_id,
-    tiltaksnummer = source.tiltaksnummer,
-    start_dato = source.start_dato,
-    slutt_dato = source.slutt_dato,
-    opprettet_tidspunkt = source.opprettet_tidspunkt,
-    oppdatert_tidspunkt = source.oppdatert_tidspunkt,
-    avsluttet_tidspunkt = source.avsluttet_tidspunkt
-WHEN NOT MATCHED THEN
-  INSERT (id, tiltakstype_id, avtale_id, tiltaksnummer, start_dato, slutt_dato, 
-  opprettet_tidspunkt, oppdatert_tidspunkt, avsluttet_tidspunkt)
-  VALUES (source.id, source.tiltakstype_id, source.avtale_id, source.tiltaksnummer, source.start_dato, source.slutt_dato, 
-  source.opprettet_tidspunkt, source.oppdatert_tidspunkt, source.avsluttet_tidspunkt)
-WHEN NOT MATCHED BY SOURCE THEN
-  DELETE
-"""
+# Get queries to read source data and update raw data in tiltak_bronze
+base_path = Path(__file__).parent
+update_gjennomforinger_query = Path(base_path/"queries/update_gjennomforinger.sql").read_text(encoding="utf-8")
+update_nav_enhet_query = Path(base_path/"queries/update_nav_enhet.sql").read_text(encoding="utf-8")
 
-update_gjennomforing_enhet_query = """
-MERGE `tiltak_bronze.nav_enhet_bronze` AS target
-USING `team-mulighetsrommet-prod-5492.mulighetsrommet_api_datastream.gjennomforing_nav_enhet_view` AS source
-ON target.gjennomforing_id = source.gjennomforing_id
-WHEN NOT MATCHED THEN 
-  INSERT (gjennomforing_id, enhetsnummer)
-  VALUES (source.gjennomforing_id, source.enhetsnummer)
-WHEN NOT MATCHED BY SOURCE THEN
-  DELETE
-"""
-
-update_raw_data(bq_client, update_gjennomforing_query)
-update_raw_data(bq_client, update_gjennomforing_enhet_query)
+# Run queries to update the raw data
+update_raw_data(bq_client, update_gjennomforinger_query)
+update_raw_data(bq_client, update_nav_enhet_query)

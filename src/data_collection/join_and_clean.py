@@ -20,6 +20,9 @@ df_tiltakstyper = get_data_from_BQ(bq_client, PROJECT_ID, DATASET_BRONZE, 'tilta
 df_gjennomforing = get_data_from_BQ(bq_client, PROJECT_ID, DATASET_BRONZE, 'gjennomforinger_bronze')
 df_gjennomforing_enhet = get_data_from_BQ(bq_client, PROJECT_ID, DATASET_BRONZE, 'nav_enhet_bronze')
 
+
+
 print(df_tiltakstyper.info())
 print(df_gjennomforing.info())
 print(df_gjennomforing_enhet.info())
+
