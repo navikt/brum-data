@@ -15,7 +15,7 @@ allowlist = [
 ]
 
 with DAG(
-    dag_id="daily_raw_data_migrate",
+    dag_id="daily_data_update",
     description="A DAG that migrates data from different BQ projects to the brum project",
     schedule_interval="0 6 * * *",
     start_date=datetime(2025, 6, 26, tzinfo=timezone("Europe/Oslo")),
@@ -28,11 +28,21 @@ with DAG(
         branch = "main",
         script_path="src/data_collection/transfer_bq_datasets.py",
         requirements_path="requirements_bq.txt",
-        #use_uv_pip_install=True,
         slack_channel="#brum-intern",
         allowlist=allowlist
     )
+    clean_data = python_operator(
+        dag=dag,
+        name="clean_data",
+        repo="navikt/brum-data",
+        branch = "main",
+        script_path="src/data_collection/data_cleaning.py",
+        requirements_path="requirements_bq.txt",
+        slack_channel="#brum-intern",
+        allowlist=allowlist
+    )
+    
 
-    migrate_bigquery
+    migrate_bigquery >> clean_data
 
 
