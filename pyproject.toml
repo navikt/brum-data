@@ -14,6 +14,7 @@ dependencies = [
     "google-cloud-secret-manager>=2.24.0",
     "numpy>=2.3.0",
     "pandas>=2.3.0",
+    "pandas-gbq>=0.29.1",
     "pandasql>=0.7.3",
     "plotly>=6.1.2",
     "pyarrow>=20.0.0",

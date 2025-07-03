@@ -5,8 +5,11 @@ removing double id's and replacing id's with names where possible
 
 import pandas as pd
 import numpy as np
+import os
 
 from functions import *
+
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 # Brum project
 PROJECT_ID = 'brum-dev-b72f'
@@ -41,4 +44,4 @@ df_gjennomforiner_merged.rename(columns={"id": "gjennomforing_id"}, inplace=True
 df_gjennomforiner_merged = df_gjennomforiner_merged[["gjennomforing_id", "navn", "start_dato", "slutt_dato",
                                                      "opprettet_tidspunkt", "oppdatert_tidspunkt", "avsluttet_tidspunkt"]]
 
-
+write_to_BQ(bq_client, table_name="gjennomforinger_silver", dframe=df_gjennomforiner_merged, dataset=DATASET_SILVER, disp = "WRITE_TRUNCATE")

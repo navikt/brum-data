@@ -2,5 +2,14 @@
     "animal_crossing_fossils":[
         {"name":"Name","type":"string"},
         {"name":"UniqueEntryID","type":"string"}
+    ],
+    "gjennomforinger_silver":[
+        {"name":"gjennomforing_id","type":"string"},
+        {"name":"navn","type":"string"},
+        {"name":"start_dato","type":"date"},
+        {"name":"slutt_dato","type":"date"},
+        {"name":"opprettet_tidspunkt","type":"timestamp"},
+        {"name":"oppdatert_tidspunkt","type":"timestamp"},
+        {"name":"avsluttet_tidspunkt","type":"timestamp"}
     ]
 }
