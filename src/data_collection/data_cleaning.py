@@ -44,4 +44,5 @@ df_gjennomforiner_merged.rename(columns={"id": "gjennomforing_id"}, inplace=True
 df_gjennomforiner_merged = df_gjennomforiner_merged[["gjennomforing_id", "navn", "start_dato", "slutt_dato",
                                                      "opprettet_tidspunkt", "oppdatert_tidspunkt", "avsluttet_tidspunkt"]]
 
+# Write the cleaned and reformatted data to bigquery at `brum-dev-b72f.tiltak_silver`
 write_to_BQ(bq_client, table_name="gjennomforinger_silver", dframe=df_gjennomforiner_merged, dataset=DATASET_SILVER, disp = "WRITE_TRUNCATE")

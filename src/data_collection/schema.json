@@ -1,8 +1,4 @@
 {
-    "animal_crossing_fossils":[
-        {"name":"Name","type":"string"},
-        {"name":"UniqueEntryID","type":"string"}
-    ],
     "gjennomforinger_silver":[
         {"name":"gjennomforing_id","type":"string"},
         {"name":"navn","type":"string"},
