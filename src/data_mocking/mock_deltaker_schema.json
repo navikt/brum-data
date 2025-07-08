@@ -1,0 +1,10 @@
+{
+    "deltaker_silver_mock":[
+        {"name":"bruker_id","type":"string"},
+        {"name":"innsatsgruppe","type":"string"},
+        {"name":"gjennomforing_id","type":"string"},
+        {"name":"start_dato","type":"date"},
+        {"name":"slutt_dato","type":"date"},
+        {"name":"status","type":"string"}
+    ]
+}

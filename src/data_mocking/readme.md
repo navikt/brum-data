@@ -14,7 +14,6 @@ Vi tar derfor et snapshot av dataen (07.07.2025) og mocker basert på hva dataen
 Fra denne kilden får vi:
 - bruker_id (heter egentlig deltaker_id men vi hopper over renaming for å letter knytte med Komet som har kalt det samme feltet bruker_id)
 - innsatsgruppekode (de forskjellige innsatsbehovene)
-- nav_kontor
 
 **Data basert på Team Komet: `amt_tiltak_datastream_amttiltak_deltaker_siste_status_view`**
 
