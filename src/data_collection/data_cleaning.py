@@ -28,8 +28,6 @@ for col in date_columns:
     df_gjennomforinger[col] = pd.to_datetime(df_gjennomforinger[col], errors="coerce")
 # Remove rows with gjennomføringer from before 2022 (out of scope), also keep null "slutt_dato" as that means they are ongoing
 df_gjennomforinger = df_gjennomforinger[(df_gjennomforinger["slutt_dato"] >= "2022-01-01") | (df_gjennomforinger["slutt_dato"].isna())]
-# Join with gjennomforing enhet to get Nav offices
-df_gjennomforinger = pd.merge(df_gjennomforinger, df_gjennomforing_enhet, how="inner", on="gjennomforing_id")
 # Remove columns: tiltaksnummer and avtale_id as they are remnants from the "arena" migration
 df_gjennomforinger.drop(columns=["tiltaksnummer", "avtale_id"], inplace=True)
 
@@ -39,10 +37,13 @@ df_tiltakstyper.rename(columns={"id": "tiltakstype_id"}, inplace=True)
 
 # Merge gjennomføringer and tiltakstyper to get relevant gjennomføringer and get the name of "tiltakstype"
 df_gjennomforinger_merged = pd.merge(df_gjennomforinger, df_tiltakstyper, how="inner", on="tiltakstype_id")
-# Drop extra columns, rename the gjennomførings id and reorder to be more readable
+# Drop extra columns, rename the gjennomførings id
 df_gjennomforinger_merged.drop(columns=["tiltakskode", "arena_tiltakskode", "tiltakstype_id"], inplace=True)
 df_gjennomforinger_merged.rename(columns={"id": "gjennomforing_id"}, inplace=True)
-df_gjennomforinger_merged = df_gjennomforinger_merged[["gjennomforing_id", "navn", "start_dato", "slutt_dato",
+# Join with gjennomforing enhet to get Nav offices
+df_gjennomforinger_merged = pd.merge(df_gjennomforinger_merged, df_gjennomforing_enhet, how="inner", on="gjennomforing_id")
+# Reorder the dataframe
+df_gjennomforinger_merged = df_gjennomforinger_merged[["gjennomforing_id", "navn", "enhetsnummer", "start_dato", "slutt_dato",
                                                      "opprettet_tidspunkt", "oppdatert_tidspunkt", "avsluttet_tidspunkt"]]
 
 # Write the cleaned and reformatted data to bigquery at `brum-dev-b72f.tiltak_silver`
