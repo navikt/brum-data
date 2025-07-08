@@ -67,8 +67,6 @@ def generer_deltaker(gjennomforing, deltakerNr):
         'status': status
     }
 
-
-    
 # Lag deltakere basert på gjennomforing_id og de tilsvarende datoene
 deltakere = []
 for i in range(0, 1000):
@@ -78,8 +76,18 @@ for i in range(0, 1000):
 
 df_deltaker = pd.DataFrame(deltakere, columns=["bruker_id", "innsatsgruppe", "gjennomforing_id", "start_dato", "slutt_dato", "status"])
     
-print(df_deltaker.info())
-print(df_deltaker.head())
 
 write_to_BQ(client=bq_client, table_name=Config.TABLE_DELTAKER_SILVER_MOCK, dframe=df_deltaker, 
+            dataset=Config.DATASET_SILVER, disp = "WRITE_TRUNCATE", schema_name="src/data_mocking/mock_deltaker_schema.json")
+
+df_gjennomforing_for_merge = df_gjennomforing.drop(columns=["start_dato", "slutt_dato", "opprettet_tidspunkt",
+                                                            "oppdatert_tidspunkt", "avsluttet_tidspunkt"])
+
+# Merge gjennomføringer med deltakere for å lage en "moder" tabell med all data
+merged_df = df_deltaker.merge(df_gjennomforing_for_merge, on="gjennomforing_id", how="inner")
+# Rename kolonne og stokk om for lesbarhet
+merged_df = merged_df.rename(columns={"navn":"tiltaksnavn"})
+merged_df = merged_df[["bruker_id", "innsatsgruppe", "enhetsnummer", "tiltaksnavn", "gjennomforing_id", "avdeling", "start_dato", "slutt_dato", "status"]]
+
+write_to_BQ(client=bq_client, table_name=Config.TABLE_DELTAKER_MERGED_SILVER_MOCK, dframe=merged_df, 
             dataset=Config.DATASET_SILVER, disp = "WRITE_TRUNCATE", schema_name="src/data_mocking/mock_deltaker_schema.json")
