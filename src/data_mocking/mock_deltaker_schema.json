@@ -17,5 +17,13 @@
         {"name":"start_dato","type":"date"},
         {"name":"slutt_dato","type":"date"},
         {"name":"status","type":"string"}
+    ],
+    "uke_antall_gold_mock":[
+        {"name":"år","type":"int64"},
+        {"name":"uke","type":"int64"},
+        {"name":"tiltaksnavn","type":"string"},
+        {"name":"innsatsgruppe","type":"string"},
+        {"name":"avdeling","type":"string"},
+        {"name":"antall","type":"int64"}
     ]
 }

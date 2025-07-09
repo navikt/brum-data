@@ -69,7 +69,7 @@ def generer_deltaker(gjennomforing, deltakerNr):
 
 # Lag deltakere basert på gjennomforing_id og de tilsvarende datoene
 deltakere = []
-for i in range(0, 1000):
+for i in range(0, 10000):
     random_gjennomforing = df_gjennomforing.sample(n=1)
     deltaker = generer_deltaker(random_gjennomforing.iloc[0], "deltaker"+str(i))
     deltakere.append(deltaker)
