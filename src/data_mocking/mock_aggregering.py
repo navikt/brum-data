@@ -37,24 +37,22 @@ group_combinations = pd.DataFrame(
     list(product(tiltak_values, gruppe_values, avdeling_values)),
     columns=['tiltaksnavn', 'innsatsgruppe', 'avdeling']
 )
-
-# 
 week_df['_tmp'] = 1
 group_combinations['_tmp'] = 1
 full_grid = pd.merge(week_df, group_combinations, on='_tmp').drop(columns=['_tmp'])
 
-# Actual counts per week/group combo
+# Iterer gjennom hver uke i tidsspennet (2022-01-01 til 2025-07-07) og tell alle tilfellene hvor tiltaksnavn, innsatsgruppe og avdeling er like
 results = []
-
 for i, week_row in week_df.iterrows():
     week_start = week_row['week_start']
     week_end = week_row['week_end']
     year = week_row['year']
     week = week_row['week']
     
-    # Filter active rows
+    # Finn rader som er innenfor uken
     active = df[(df['start_dato'] <= week_end) & (df['slutt_dato'] >= week_start)]
 
+    # Grupper sammen
     if not active.empty:
         grouped = (
             active
@@ -66,10 +64,10 @@ for i, week_row in week_df.iterrows():
         grouped['week'] = week
         results.append(grouped)
 
-# Combine all weekly results
+# Kombiner alle de forskjellige ukene vi har gruppert (inkluderer bare de tilfellene hvor vi har deltakere)
 count_df = pd.concat(results, ignore_index=True) if results else pd.DataFrame(columns=['tiltaksnavn', 'innsatsgruppe', 'avdeling', 'antall', 'year', 'week'])
 
-# Merge counts into full grid (left join)
+# Gjør for å inkludere de tilfellene hvor det er 0 deltakere
 final_df = pd.merge(
     full_grid,
     count_df,
@@ -77,12 +75,11 @@ final_df = pd.merge(
     how='left'
 )
 
-# Fill missing counts with 0
+# Fyll inn verdien 0 i de radene uten deltakere
 final_df['count'] = final_df['count'].fillna(0).astype(int)
 
-# Optional: sort and drop extra columns
+# Stokker om på rader og fjerner unødvendige rader for "gold" nivå table
 final_df = final_df.sort_values(['year', 'week', 'tiltaksnavn'])
-
 final_df = final_df.rename(columns={"year":"år", "week":"uke", "count":"antall"})
 final_df = final_df.drop(columns={"week_start", "week_end"})
 
