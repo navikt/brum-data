@@ -25,5 +25,12 @@
         {"name":"innsatsgruppe","type":"string"},
         {"name":"avdeling","type":"string"},
         {"name":"antall","type":"int64"}
+    ],
+    "uke_antall_avdeling_gold_mock":[
+        {"name":"år","type":"int64"},
+        {"name":"uke","type":"int64"},
+        {"name":"tiltaksnavn","type":"string"},
+        {"name":"avdeling","type":"string"},
+        {"name":"antall","type":"int64"}
     ]
 }

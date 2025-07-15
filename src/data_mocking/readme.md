@@ -54,5 +54,5 @@ Dette genererer vi uten noe grunnlag i datamarkedsplassen
 2. Vi iterer se gjennom hver eneste uke og teller alle tilfellene av hver kombinasjon av tiltak, avdeling og innsatsgruppe. Dette vil føre til at hver uke får 240 rader, en for hver eneste kombinasjon av de tre filterne.
 3. Gjør nødvendig logikk for å inkludere rader hvor man har 0 tellinger.
 4. Skrives til BigQuery for å lage vårt "gold" nivå table.
-
+5. Vi gjør også en seperat aggregering etterpå som ignorer innsatsgruppe, for å gi hele tellinger for bare avdelinger
 
